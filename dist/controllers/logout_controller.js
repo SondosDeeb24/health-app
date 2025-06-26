@@ -13,6 +13,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logout = void 0;
+const get_token_data_1 = require("../helpers/get_token_data");
 //==================================================================================================================
 //? Log out function
 //==================================================================================================================
@@ -20,11 +21,16 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // remove the token from the cookie
         res.clearCookie('token');
-        // const id: string = req.user.username;
+        const user_data = (0, get_token_data_1.extract_token_data)(req, res);
+        if (!user_data) { // when no user_data found, we get null to stop the function, error message already sent from extract_token_data function
+            return;
+        }
         //temporary :
-        const name = "fix the auth func ";
+        const name = user_data.user_fullname; //"fix the auth func "
         console.log(`User with this id : "${name}" logged out\n`); // test, can delete later
         return res.json({ message: `User logged out (${name})` });
+        // console.log(`User logged out\n`); // test, can delete later
+        // return res.json({ message: `User logged out ` });
     }
     catch (error) {
         console.error("Error during logout:", error);

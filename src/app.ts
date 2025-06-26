@@ -13,6 +13,7 @@ import cors from 'cors';
 //===========================================================================================
 
 import cookieParser from 'cookie-parser';//middleware for parsing cookies in Express requests
+app.use(cookieParser());
 
 //===========================================================================================
 //? Enable CORS middleware
@@ -35,6 +36,7 @@ app.use(cookieParser());// allow reading cookies
 import sign_in_route from './API_routes/sign_in_api';
 import login_route from './API_routes/login_api';
 import logout_route from './API_routes/logout_api';
+import test from './API_routes/homepage_api';
 //===========================================================================================
 //? set up routes handler for the API endpoints
 //===========================================================================================
@@ -42,6 +44,7 @@ import logout_route from './API_routes/logout_api';
 app.use('/api/sign_in', sign_in_route);
 app.use('/api/login', login_route);
 app.use('/api/logout', logout_route);
+app.use('/api/homepage', test);
 //===========================================================================================
 
 export default app;

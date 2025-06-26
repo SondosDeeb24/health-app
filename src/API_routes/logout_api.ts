@@ -11,10 +11,12 @@ const router: Router = express.Router();
 //===========================================================================================================
 import {logout} from '../controllers/logout_controller';
 
+import { login_required } from '../middlewares/login_required';
+
 //===========================================================================================================
 // Route to add new user to the system (Sign in )
 //===========================================================================================================;
-router.post('/', logout);
+router.post('/',login_required, logout);
 
 //===========================================================================================================
 export default router;

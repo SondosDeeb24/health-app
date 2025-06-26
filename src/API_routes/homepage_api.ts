@@ -1,20 +1,23 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
 //===========================================================================================================
 // Setting up Express router
 //===========================================================================================================
-const express_1 = __importDefault(require("express"));
-const router = express_1.default.Router();
+import express, { Router } from 'express';
+
+const router: Router = express.Router();
+
 //===========================================================================================================
-// Importing sign_in functoion
+// Importing login function
 //===========================================================================================================
-const sign_in_controller_1 = require("../controllers/sign_in_controller");
+
+import {test} from '../controllers/homepage_controller';
+
+import { login_required } from '../middlewares/login_required';
 //===========================================================================================================
-// Route to add new user to the system (Sign in )
-//===========================================================================================================;
-router.post('/', sign_in_controller_1.sign_in);
+// Router
 //===========================================================================================================
-exports.default = router;
+
+router.get('/', login_required, test)
+
+//===========================================================================================================
+
+export default router;

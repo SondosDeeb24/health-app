@@ -14,6 +14,7 @@ const cors_1 = __importDefault(require("cors"));
 //? Import Middlewares & Libraries(modules) we will use
 //===========================================================================================
 const cookie_parser_1 = __importDefault(require("cookie-parser")); //middleware for parsing cookies in Express requests
+app.use((0, cookie_parser_1.default)());
 //===========================================================================================
 //? Enable CORS middleware
 //===========================================================================================
@@ -30,11 +31,13 @@ app.use((0, cookie_parser_1.default)()); // allow reading cookies
 const sign_in_api_1 = __importDefault(require("./API_routes/sign_in_api"));
 const login_api_1 = __importDefault(require("./API_routes/login_api"));
 const logout_api_1 = __importDefault(require("./API_routes/logout_api"));
+const homepage_api_1 = __importDefault(require("./API_routes/homepage_api"));
 //===========================================================================================
 //? set up routes handler for the API endpoints
 //===========================================================================================
 app.use('/api/sign_in', sign_in_api_1.default);
 app.use('/api/login', login_api_1.default);
 app.use('/api/logout', logout_api_1.default);
+app.use('/api/homepage', homepage_api_1.default);
 //===========================================================================================
 exports.default = app;

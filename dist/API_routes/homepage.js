@@ -9,13 +9,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 //===========================================================================================================
-// Importing sign_in functoion
+// Importing login function
 //===========================================================================================================
-const logout_controller_1 = require("../controllers/logout_controller");
-const login_required_1 = require("../middlewares/login_required");
+const homepage_controller_1 = require("../controllers/homepage_controller");
 //===========================================================================================================
-// Route to add new user to the system (Sign in )
-//===========================================================================================================;
-router.post('/', login_required_1.login_required, logout_controller_1.logout);
+// Router
+//===========================================================================================================
+router.post('/', homepage_controller_1.test);
 //===========================================================================================================
 exports.default = router;

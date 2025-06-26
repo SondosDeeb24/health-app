@@ -13,34 +13,34 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 import {Request, Response} from 'express';
 
-import { RowDataPacket, ResultSetHeader } from "mysql2";
+import { RowDataPacket } from "mysql2";
 //===========================================================================================================
 
 
 const login = async (req: Request , res: Response): Promise< any > => {
 
     interface login_data {
-        username: string;
+        email: string;
         password: string;
     }
     
     const body: login_data = req.body;
 
     const {
-        username, 
+        email, 
         password
     } = body;
 
     try{
         //check if the user provided all the needed data
-        if( !username || !password){
+        if( !email || !password){
             return res.status(400).json({message: "Fill all Fields please" });
         }
 
         //====================================================================================================================================================
         // check if user registed in the system
 
-        const [user_exist] = await database.query< RowDataPacket[] >('SELECT * FROM health_app.users WHERE username = ?' , [username]);
+        const [user_exist] = await database.query< RowDataPacket[] >('SELECT * FROM health_app.users WHERE user_email = ?' , [email]);
 
         if(user_exist.length == 0 ){
             return res.status(400).json({message: "No user found with the provided data"});
@@ -62,15 +62,15 @@ const login = async (req: Request , res: Response): Promise< any > => {
                 return res.status(401).json({message: "Error in fetching JWT secret key"});
             }
 
-            const token: string = jwt.sign({username: user.username, user_fullname: user.user_fullname}, JWT_key);
+            const token: string = jwt.sign({user_id: user.user_id, user_role: user.user_role, user_fullname: user.user_fullname}, JWT_key);
             
             //---------------------------------------------------------------------------------------------------------------------------------------------
             // Generate cookie and store JWT inside it
             res.cookie('token', token, { httpOnly: true, maxAge: 7200000 }); // 2 hours in milliseconds
 
 
-            console.log(`User "${user.username}" logged in`); 
-            return res.status(200).json({ message: `User ${user.username} logged in`, token: token });
+            console.log(`"${user.user_fullname}" logged in`); 
+            return res.status(200).json({ message: `${user.user_fullname} logged in`, token: token });
         }
 
         else{
@@ -80,8 +80,8 @@ const login = async (req: Request , res: Response): Promise< any > => {
     //=========================================================================================
     }
     catch(error){
-        console.log(`Error Found while Loging in for "${username}"`, error);
-        return res.status(201).json({ message: `Error Found while Loging in for ${username}`, error });        
+        console.log(`Error Found while Loging in`, error);
+        return res.status(201).json({ message: `Error Found while Loging in`, error });        
     }
 
 
