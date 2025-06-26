@@ -11,12 +11,14 @@ const router: Router = express.Router();
 
 import {test} from '../controllers/homepage_controller';
 
-import { login_required } from '../middlewares/login_required';
+import { login_required } from '../middlewares/login_required'; // function to to check authentication 
+import { authorize_role } from "../middlewares/authorize_role";// function to to check authorization 
+
 //===========================================================================================================
 // Router
 //===========================================================================================================
 
-router.get('/', login_required, test)
+router.get('/', login_required, authorize_role, test)
 
 //===========================================================================================================
 
