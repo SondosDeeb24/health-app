@@ -60,8 +60,14 @@ interface create_appointment{
 interface params {
     dr_department?: string;
 }
+
+
+interface doctor_basic_info extends RowDataPacket{
+    user_id: string,
+    user_fullname: string
+}
 // ========================================================================================================
 
 
 
-export {login_data, user_signin_data, JWT_data, params};
+export {login_data, user_signin_data, JWT_data, params, doctor_basic_info};

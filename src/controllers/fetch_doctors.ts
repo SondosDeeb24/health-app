@@ -5,11 +5,11 @@
 import database from '../database_connection';
 
 import { Request, Response } from 'express';
-
 import { RowDataPacket } from "mysql2";
 
+// import needed interfaces from interface folder
 import { params } from '../interfaces/first';
-
+import { doctor_basic_info } from '../interfaces/first';
 //===========================================================================================================
 //? function to fetch all the doctors (optional criteria: by department)
 //===========================================================================================================
@@ -18,17 +18,13 @@ const fetch_doctors = async (req: Request<params>, res: Response): Promise< void
     try{
        const {dr_department} = req.params; // extract the department from the URL 
 
-        interface x extends RowDataPacket{
-            user_id: string,
-            user_fullname: string
-        }
 
-        let doctors: x[] = []; // declare the doctors array
+        let doctors: doctor_basic_info[] = []; // declare the doctors array
         
         if (!dr_department){
-            [doctors] = await database.query< x[] >("SELECT user_id , user_fullname FROM health_app.users WHERE user_role= ?", ['doctor']);
+            [doctors] = await database.query< doctor_basic_info[] >("SELECT user_id , user_fullname FROM health_app.users WHERE user_role= ?", ['doctor']);
         }else{
-            [doctors] = await database.query< x[] >("SELECT user_id , user_fullname FROM health_app.users WHERE user_role= ? AND user_department= ?", ['doctor', dr_department]);
+            [doctors] = await database.query< doctor_basic_info[] >("SELECT user_id , user_fullname FROM health_app.users WHERE user_role= ? AND user_department= ?", ['doctor', dr_department]);
         }
 
 
