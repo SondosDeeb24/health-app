@@ -8,6 +8,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login_required = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+//=======================================================================================
+//? Authentication functions:
+// it ensures that only logged in users are able to access the routes
+//=======================================================================================
+// interface JWT_data{
+//     user_id: string;
+//     user_fullname: string;
+//     user_role: string;
+// }
 const login_required = (req, res, next) => {
     try {
         // take the token from the cookie 

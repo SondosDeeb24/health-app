@@ -14,15 +14,18 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 import {Request, Response} from 'express';
 
 import { RowDataPacket } from "mysql2";
+
+
+import { login_data } from "../interfaces/first";
 //===========================================================================================================
 
 
 const login = async (req: Request , res: Response): Promise< any > => {
 
-    interface login_data {
-        email: string;
-        password: string;
-    }
+    // interface login_data {
+    //     email: string;
+    //     password: string;
+    // }
     
     const body: login_data = req.body;
 

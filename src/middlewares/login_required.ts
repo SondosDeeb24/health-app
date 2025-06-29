@@ -5,17 +5,17 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-
+import { JWT_data } from '../interfaces/first';//  import JWT_data interface (which have the attributes stored in token)
 //=======================================================================================
 //? Authentication functions:
 // it ensures that only logged in users are able to access the routes
 //=======================================================================================
 
-interface JWT_data{
-    user_id: string;
-    user_fullname: string;
-    user_role: string;
-}
+// interface JWT_data{
+//     user_id: string;
+//     user_fullname: string;
+//     user_role: string;
+// }
 const login_required = (req: Request, res: Response, next: NextFunction): void  => {
   try {
     // take the token from the cookie 

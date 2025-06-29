@@ -37,6 +37,7 @@ import sign_in_route from './API_routes/sign_in_api';
 import login_route from './API_routes/login_api';
 import logout_route from './API_routes/logout_api';
 import test from './API_routes/homepage_api';
+import fetch_doctors  from './API_routes/fetch_doctors';
 //===========================================================================================
 //? set up routes handler for the API endpoints
 //===========================================================================================
@@ -45,6 +46,7 @@ app.use('/api/sign_in', sign_in_route);
 app.use('/api/login', login_route);
 app.use('/api/logout', logout_route);
 app.use('/api/homepage', test);
+app.use('/api/view_doctors', fetch_doctors);
 //===========================================================================================
 
 export default app;

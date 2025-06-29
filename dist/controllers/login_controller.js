@@ -25,6 +25,10 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({ path: path_1.default.resolve(__dirname, '../../.env') });
 //===========================================================================================================
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // interface login_data {
+    //     email: string;
+    //     password: string;
+    // }
     const body = req.body;
     const { email, password } = body;
     try {

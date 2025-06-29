@@ -33,7 +33,7 @@ const sign_in = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     user_role, user_fullname, user_gender, user_address, user_phone, user_email, user_birth_date, user_password, user_blood_type, user_department } = body;
     try {
         // take the inputs and ensure all fields provided
-        if (!user_role || !user_fullname || !user_gender || !user_address || !user_phone || !user_email || !user_birth_date || !user_password) {
+        if (!user_role || !user_fullname || user_gender == undefined || !user_address || !user_phone || !user_email || !user_birth_date || !user_password) {
             return res.status(400).json({ message: "Fill all Fields please" });
         }
         //---------------------------------------------------------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ const sign_in = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // Check that username is not used in the database 
         if (found.length !== 0) {
             console.log("Email-address already used, use another one!");
-            return res.status(400).json({ message: "Email-address already used, write another one!" });
+            return res.status(400).json({ message: "Email-address already used, use another one!" });
         }
         //---------------------------------------------------------------------------------------------------------------------------------------
         // generate id and check its uniqueness
