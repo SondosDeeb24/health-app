@@ -24,10 +24,13 @@ const fetch_doctors = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const { dr_department } = req.params; // extract the department from the URL 
         let doctors = []; // declare the doctors array
+        // fetch the doctors from the database
         if (!dr_department) {
+            //fetch all the doctors in the database
             [doctors] = yield database_connection_1.default.query("SELECT user_id , user_fullname FROM health_app.users WHERE user_role= ?", ['doctor']);
         }
         else {
+            //fetch the all the doctors from a specific defined department
             [doctors] = yield database_connection_1.default.query("SELECT user_id , user_fullname FROM health_app.users WHERE user_role= ? AND user_department= ?", ['doctor', dr_department]);
         }
         if (doctors.length == 0) {
@@ -37,6 +40,7 @@ const fetch_doctors = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         res.status(200).json(doctors);
         return;
+        //---------------------------------------------------------------------------------------------------------------
     }
     catch (error) {
         console.log("Error while getting the doctors, try again please");

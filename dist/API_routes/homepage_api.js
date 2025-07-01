@@ -9,11 +9,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 //===========================================================================================================
-// Importing login function
+// Importing homepage function
 //===========================================================================================================
-const homepage_controller_1 = require("../controllers/homepage_controller");
+// Middlewares  for authentication and authorization
 const login_required_1 = require("../middlewares/login_required"); // function to to check authentication 
-const authorize_role_1 = require("../middlewares/authorize_role"); // function to to check authorization 
+const authorize_role_1 = require("../middlewares/authorize_role"); // function to to check authorization
+//Import controller functions for homepage routes
+const homepage_controller_1 = require("../controllers/homepage_controller");
 //===========================================================================================================
 // Router
 //===========================================================================================================

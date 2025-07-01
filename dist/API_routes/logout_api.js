@@ -12,6 +12,7 @@ const router = express_1.default.Router();
 // Importing sign_in functoion
 //===========================================================================================================
 const logout_controller_1 = require("../controllers/logout_controller");
+// Middlewares  for authentication 
 const login_required_1 = require("../middlewares/login_required");
 //===========================================================================================================
 // Route to add new user to the system (Sign in )

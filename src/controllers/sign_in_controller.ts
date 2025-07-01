@@ -5,19 +5,23 @@
 // types for request handling and database querites results (from express and mysql2)
 //===========================================================================================================
 import database from "../database_connection";
+
+//importing hashing library
 import bcrypt from "bcrypt";
 
 import {Request, Response} from "express";
 
-import { RowDataPacket, ResultSetHeader } from "mysql2";
+// importing type for mysql result metadata
+import { ResultSetHeader } from "mysql2";
 
-import { user_signin_data } from "../interfaces/first";
+//import interface for data received from the user
+import { user_signin_data } from "../interfaces/sign_in";
 
 //===========================================================================================================
 //? Sign in function
 //===========================================================================================================
 
-const sign_in = async (req: Request, res: Response): Promise< any > => { // this function will return Response object that have return value( mostly in my case here it's string )
+const sign_in = async (req: Request, res: Response): Promise< void > => { // this function will return Response object that have return value( mostly in my case here it's string )
     
     // declaring new variable called "body" and initializing it with values from req.body, 
     // and sepcify that it should have the same properties like "user_singin_data" interface
@@ -41,8 +45,10 @@ const sign_in = async (req: Request, res: Response): Promise< any > => { // this
     try {
         // take the inputs and ensure all fields provided
 
-        if (!user_role || !user_fullname || user_gender == undefined || !user_address || !user_phone || !user_email || !user_birth_date || !user_password ) {
-            return res.status(400).json({ message: "Fill all Fields please" });
+        if (!user_role || !user_fullname || !user_gender || !user_address || !user_phone || !user_email || !user_birth_date || !user_password ) {
+            console.log("Fill all Fields please");
+            res.status(400).json({ message: "Fill all Fields please" });
+            return ;
         }
         //---------------------------------------------------------------------------------------------------------------------------------------
         // check that the user is not already regestired in our system (by verifying special username)
@@ -53,8 +59,9 @@ const sign_in = async (req: Request, res: Response): Promise< any > => { // this
 
         // Check that username is not used in the database 
         if (found.length !== 0) { 
-            console.log("Email-address already used, use another one!")
-            return res.status(400).json({ message: "Email-address already used, use another one!" });
+            console.log("Email-address already used, use another one!");
+            res.status(400).json({ message: "Email-address already used, use another one!" });
+            return; 
         }
 
         //---------------------------------------------------------------------------------------------------------------------------------------
@@ -62,13 +69,14 @@ const sign_in = async (req: Request, res: Response): Promise< any > => { // this
         let user_id: number;
         let unique: user_signin_data[];
         do{
-            user_id = Math.floor(10000000 + Math.random() * 90000000);
+            user_id = Math.floor(10000000 + Math.random() * 90000000);// generate user id
 
             [unique] = await database.query<user_signin_data[]> (
                 'SELECT * FROM health_app.users WHERE user_id = ?', [user_id]);
         }
         while(unique.length !== 0)
         
+        //-------------------------------------------------------------------------
         // hashe the user_password
         const hashed_password: string = await bcrypt.hash(user_password, 8);
 
@@ -78,17 +86,20 @@ const sign_in = async (req: Request, res: Response): Promise< any > => { // this
             [user_id, user_role, user_fullname, user_gender, user_address, user_phone, user_email, user_birth_date, hashed_password, user_blood_type, user_department]);
   
         if (adding_user.affectedRows == 0) {  //affectedRows - it return the number of changed, added or deleted row  by the last statment
-            console.log('Databaes Error, User was not registered!')
-            return res.status(500).json({ message: 'Database error, User was not registered!' });
+            console.log('Databaes Error, User was not registered!');
+            res.status(500).json({ message: 'Database error, User was not registered!' });
+            return ;
         }
 
 
         console.log(`"${user_fullname}" registered successfully, please log in`);
-        return res.status(201).json({ message: `${user_fullname} registered successfully, please log in` });
+        res.status(201).json({ message: `${user_fullname} registered successfully, please log in` });
+        return ;
         //---------------------------------------------------------------------------------------------------------------------------------------
     } catch (error) {
         console.log(`Error Found while Registering "${user_fullname}"`, error);
-        return res.status(201).json({ message: `Error Found while Registering ${user_fullname}`, error });
+        res.status(500).json({ message: `Error Found while Registering ${user_fullname}`, error });
+        return;
     }
 
 }

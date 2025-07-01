@@ -17,30 +17,33 @@ exports.login = void 0;
 //? Import 
 //===========================================================================================================
 const database_connection_1 = __importDefault(require("../database_connection"));
+//import hashing library
 const bcrypt_1 = __importDefault(require("bcrypt"));
+//import json web token library, to create JWTs
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const path_1 = __importDefault(require("path"));
 const dotenv_1 = __importDefault(require("dotenv"));
 // __dirname points to the folder where our folder "dist/" located, we need to go outside it to the project root folder and find .env
 dotenv_1.default.config({ path: path_1.default.resolve(__dirname, '../../.env') });
 //===========================================================================================================
+//? function for login
+//===========================================================================================================
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // interface login_data {
-    //     email: string;
-    //     password: string;
-    // }
-    const body = req.body;
-    const { email, password } = body;
     try {
+        // extract the login credentials from the request body
+        const body = req.body;
+        const { email, password } = body;
         //check if the user provided all the needed data
         if (!email || !password) {
-            return res.status(400).json({ message: "Fill all Fields please" });
+            res.status(400).json({ message: "Fill all Fields please" });
+            return;
         }
         //====================================================================================================================================================
         // check if user registed in the system
         const [user_exist] = yield database_connection_1.default.query('SELECT * FROM health_app.users WHERE user_email = ?', [email]);
         if (user_exist.length == 0) {
-            return res.status(400).json({ message: "No user found with the provided data" });
+            res.status(400).json({ message: "No user found with the provided data" });
+            return;
         }
         const user = user_exist[0];
         //=================================================================================================================================================
@@ -53,23 +56,28 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             // check that the key exists in the first place
             if (!JWT_key) {
                 console.log("Error in fetching JWT secret key");
-                return res.status(401).json({ message: "Error in fetching JWT secret key" });
+                res.status(401).json({ message: "Error in fetching JWT secret key" });
+                return;
             }
             const token = jsonwebtoken_1.default.sign({ user_id: user.user_id, user_role: user.user_role, user_fullname: user.user_fullname }, JWT_key);
             //---------------------------------------------------------------------------------------------------------------------------------------------
             // Generate cookie and store JWT inside it
             res.cookie('token', token, { httpOnly: true, maxAge: 7200000 }); // 2 hours in milliseconds
             console.log(`"${user.user_fullname}" logged in`);
-            return res.status(200).json({ message: `${user.user_fullname} logged in`, token: token });
+            res.status(200).json({ message: `${user.user_fullname} logged in`, token: token });
+            return;
         }
         else {
-            return res.status(401).json({ message: "password is wrong, please try again" });
+            console.log("password is wrong, please try again");
+            res.status(401).json({ message: "password is wrong, please try again" });
+            return;
         }
         //=========================================================================================
     }
     catch (error) {
         console.log(`Error Found while Loging in`, error);
-        return res.status(201).json({ message: `Error Found while Loging in`, error });
+        res.status(201).json({ message: `Error Found while Loging in`, error });
+        return;
     }
 });
 exports.login = login;

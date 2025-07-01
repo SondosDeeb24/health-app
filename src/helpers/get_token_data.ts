@@ -2,7 +2,9 @@
 //? Importing 
 //=============================================================
 
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
+
+// import json web token library to verify the token
 import jwt from 'jsonwebtoken';
 
 //=============================================================
@@ -22,9 +24,9 @@ const extract_token_data =  (req: Request, res: Response ): JWT_data | null => {
         const token: string = req.cookies.token;
 
         if(!token){
-                console.log("Session expired, Please log in again")
-                res.status(401).json({message: "Session expired, Please log in again"});
-                return null;
+            console.log("Session expired, Please log in again")
+            res.status(401).json({message: "Session expired, Please log in again"});
+            return null;
         }
         
         const JWT_key = process.env.JWT_key;

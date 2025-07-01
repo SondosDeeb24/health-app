@@ -11,6 +11,7 @@ const router: Router = express.Router();
 //===========================================================================================================
 import {logout} from '../controllers/logout_controller';
 
+// Middlewares  for authentication 
 import { login_required } from '../middlewares/login_required';
 
 //===========================================================================================================

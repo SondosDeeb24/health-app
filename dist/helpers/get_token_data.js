@@ -7,6 +7,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.extract_token_data = void 0;
+// import json web token library to verify the token
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const extract_token_data = (req, res) => {
     try {

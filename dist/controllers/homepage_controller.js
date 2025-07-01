@@ -10,17 +10,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.test = void 0;
+// import a helper function to extract user data from the token
 const get_token_data_1 = require("../helpers/get_token_data");
 //===========================================================================================================
-//?
+//
 //===========================================================================================================
-// temp func for testing reasons
+// temp func (it will be updated soon!)
 const test = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = (0, get_token_data_1.extract_token_data)(req, res);
     if (!user) {
         return;
     }
-    console.log(`welcome ${user === null || user === void 0 ? void 0 : user.user_fullname}`);
+    console.log(`welcome ${user.user_fullname}`);
     res.status(201).json({ message: `welcome ${user === null || user === void 0 ? void 0 : user.user_fullname}` });
     return;
 });

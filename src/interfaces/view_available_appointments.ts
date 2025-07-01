@@ -1,5 +1,9 @@
-"use strict";
 // ========================================================================================================
-//? interface for login_required middleware
+//? interface for data we take from user to book an appointment
 // ========================================================================================================
-Object.defineProperty(exports, "__esModule", { value: true });
+export interface patient_make_appointment {
+    department: string,
+    appointment_date: string,
+    doctor_id?: number
+}
+

@@ -1,5 +1,5 @@
 "use strict";
 // ========================================================================================================
-//? interface for login_required middleware
+//? interface for sign_in controller
 // ========================================================================================================
 Object.defineProperty(exports, "__esModule", { value: true });

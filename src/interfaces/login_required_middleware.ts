@@ -1,5 +1,9 @@
-"use strict";
 // ========================================================================================================
 //? interface for login_required middleware
 // ========================================================================================================
-Object.defineProperty(exports, "__esModule", { value: true });
+
+export interface JWT_data{
+    user_id: string;
+    user_fullname: string;
+    user_role: string;
+}
