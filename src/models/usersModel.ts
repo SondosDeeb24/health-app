@@ -24,8 +24,8 @@ class User extends Model< InferAttributes<User>, InferCreationAttributes<User> >
   declare userPhone: string;
   declare userEmail: string;
   declare userBirthDate: Date;
-  declare userBloodType?: typeof bloodTypes[keyof typeof bloodTypes];;
-  declare userDepartment?: keyof typeof departments;
+  declare userBloodType?: typeof bloodTypes[keyof typeof bloodTypes];
+  declare userDepartment?: typeof departments[keyof typeof departments];
   declare userHashedPassword: string;
 }
 
@@ -60,7 +60,7 @@ User.init( {
       type: DataTypes.STRING(50) ,
       allowNull: false},
     userBirthDate: { 
-      type: DataTypes.DATE ,
+      type: DataTypes.DATEONLY ,
       allowNull: false},
     userBloodType: {
       type: DataTypes.ENUM(...Object.values(bloodTypes) as string[])

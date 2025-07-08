@@ -12,7 +12,7 @@ import jwt from 'jsonwebtoken';
 //=============================================================
 
 interface JWT_data{
-    user_id: string;
+    user_id: number;
     user_fullname: string;
     user_role: string;
 }

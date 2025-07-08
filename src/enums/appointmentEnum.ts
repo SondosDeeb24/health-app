@@ -2,7 +2,7 @@
 //? appointment status enum
 //======================================================================
 
-export enum status{
+export enum appointment_status{
     available = 'available',
     booked = 'booked'
 }

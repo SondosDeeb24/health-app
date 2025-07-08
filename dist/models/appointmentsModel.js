@@ -45,7 +45,7 @@ Appointment.init({
         type: sequelize_1.DataTypes.TIME,
         allowNull: false
     }, appointmentStatus: {
-        type: sequelize_1.DataTypes.ENUM(...Object.values(appointmentEnum_1.status)),
+        type: sequelize_1.DataTypes.ENUM(...Object.values(appointmentEnum_1.appointment_status)),
         allowNull: false
     }
 }, {
@@ -56,19 +56,25 @@ Appointment.init({
 //-------------------------------------------------------------------------------------------------------------------------------------
 //?define the foreign keys relation (Association)
 //-------------------------------------------------------------------------------------------------------------------------------------
+// I added 'as' because i want to distiguish the user roles from Appointment model side 
 Appointment.belongsTo(usersModel_1.default, {
     foreignKey: 'patientID',
+    as: 'patient',
     onDelete: 'CASCADE'
 });
 Appointment.belongsTo(usersModel_1.default, {
     foreignKey: 'doctorID',
+    as: 'doctor',
     onDelete: 'CASCADE'
 });
+// I added 'as' here incase we wanted to use the associaiton from the User model side 
 usersModel_1.default.hasMany(Appointment, {
-    foreignKey: 'patientID'
+    foreignKey: 'patientID',
+    as: 'patientAppointment'
 });
 usersModel_1.default.hasMany(Appointment, {
-    foreignKey: 'doctorID'
+    foreignKey: 'doctorID',
+    as: 'doctorAppointment'
 });
 //====================================================================================================================
 //!!

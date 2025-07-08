@@ -28,20 +28,12 @@ app.use((0, cookie_parser_1.default)()); // allow reading cookies
 //===========================================================================================
 //? Import the Routes
 //===========================================================================================
-const sign_in_api_1 = __importDefault(require("./API_routes/sign_in_api"));
-const login_api_1 = __importDefault(require("./API_routes/login_api"));
-const logout_api_1 = __importDefault(require("./API_routes/logout_api"));
-const homepage_api_1 = __importDefault(require("./API_routes/homepage_api"));
-const fetch_doctors_1 = __importDefault(require("./API_routes/fetch_doctors"));
-const appointment_1 = __importDefault(require("./API_routes/appointment"));
+const authRoute_1 = __importDefault(require("./API_routes/authRoute"));
+const apptRoute_1 = __importDefault(require("./API_routes/apptRoute"));
 //===========================================================================================
 //? set up routes handler for the API endpoints
 //===========================================================================================
-app.use('/api/sign_in', sign_in_api_1.default);
-app.use('/api/login', login_api_1.default);
-app.use('/api/logout', logout_api_1.default);
-app.use('/api/homepage', homepage_api_1.default);
-app.use('/api/view_doctors', fetch_doctors_1.default);
-app.use('/api/appointment', appointment_1.default);
+app.use('/api/auth', authRoute_1.default);
+app.use('/api/appt', apptRoute_1.default);
 //===========================================================================================
 exports.default = app;

@@ -13,7 +13,6 @@ const userEnum_1 = require("../enums/userEnum");
 //? Model class
 //==============================================================================================================================================
 class User extends sequelize_1.Model {
-    ;
 }
 //======================================================================================================================
 //? Initialize the table
@@ -48,7 +47,7 @@ User.init({
         allowNull: false
     },
     userBirthDate: {
-        type: sequelize_1.DataTypes.DATE,
+        type: sequelize_1.DataTypes.DATEONLY,
         allowNull: false
     },
     userBloodType: {

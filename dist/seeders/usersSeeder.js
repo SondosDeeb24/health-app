@@ -20,46 +20,64 @@ exports.default = {
         return __awaiter(this, void 0, void 0, function* () {
             yield queryInterface.bulkInsert("Users", [
                 {
-                    userID: 999,
+                    userID: 52097494,
                     userRole: 'doctor',
-                    userName: 'john',
+                    userName: 'john chalopen',
                     userGender: 'male',
                     userAddress: 'gonyle',
                     userPhone: '+905298298',
                     userEmail: 'john@gmail.com',
                     userBirthDate: '2002-05-17',
-                    userDepartment: 'Cardiology',
-                    userHashedPassword: 'john'
-                    // createdAt: new Date(),
-                    // updatedAt: new Date()
+                    userDepartment: 'Emergency',
+                    userHashedPassword: '$2b$08$hLLXN.Sd9ezYwW.KoM/goOp0ghEBFB7tHjnm7gNsfenu92pXCukzm'
                 },
                 {
-                    userID: 444,
+                    userID: 60085985,
                     userRole: 'doctor',
-                    userName: 'mona',
+                    userName: 'nicole sabby',
                     userGender: 'male',
                     userAddress: 'gonyle',
                     userPhone: '+905298298',
-                    userEmail: 'mona@gmail.com',
+                    userEmail: 'nicole@gmail.com',
                     userBirthDate: '2001-05-17',
                     userDepartment: 'Cardiology',
-                    userHashedPassword: 'mona'
-                    // createdAt: new Date(),
-                    // updatedAt: new Date()
+                    userHashedPassword: '$2b$08$ugCEs8i/ejeL8YNdmplH1O7dtUmzyIr4GCNfzdtWZZ8iCJ.l8YKJq'
                 },
                 {
-                    userID: 666,
-                    userRole: 'patient',
-                    userName: 'paria',
+                    userID: 12547898,
+                    userRole: 'doctor',
+                    userName: 'tiana antonaole',
                     userGender: 'female',
                     userAddress: 'gonyle',
                     userPhone: '+905298298',
-                    userEmail: 'paria@gmail.com',
+                    userEmail: 'tiana@gmail.com',
                     userBirthDate: '2002-05-17',
+                    userDepartment: 'Cardiology',
+                    userHashedPassword: '$2b$08$y9irsv4cSLs6f4CCvjsVPOkMNPoSr7qdqobI38vWYSjvKf.LoBKYi'
+                },
+                {
+                    userID: 42413365,
+                    userRole: 'patient',
+                    userName: 'lara',
+                    userGender: 'female',
+                    userAddress: 'gonyle',
+                    userPhone: '+90457764',
+                    userEmail: 'lara@gmail.com',
+                    userBirthDate: '2000-02-22',
                     userBloodType: 'A+',
-                    userHashedPassword: 'paria'
-                    // createdAt: new Date(),
-                    // updatedAt: new Date()
+                    userHashedPassword: '$2b$08$JePJLlEfYvCICwJCFAm1cu8oDcQjaX0NuWdCRgqJdchWFz3BByH8u'
+                },
+                {
+                    userID: 65985412,
+                    userRole: 'patient',
+                    userName: 'morgan ferman',
+                    userGender: 'male',
+                    userAddress: 'gonyle',
+                    userPhone: '+90457764',
+                    userEmail: 'morgan@gmail.com',
+                    userBirthDate: '2001-02-22',
+                    userBloodType: 'B+',
+                    userHashedPassword: '$2b$08$82oHl4rDBlRcRFTw65lVxOll6HL8UZY0pQXQGSAD69fW/KFTj9K8S'
                 },
             ]);
         });
@@ -69,7 +87,7 @@ exports.default = {
     down(queryInterface) {
         return __awaiter(this, void 0, void 0, function* () {
             yield queryInterface.bulkDelete("Users", {
-                userID: [444, 666, 999]
+                userID: [63831988, 444, 666, 999] //[52097494, 60085985, 22192181, 42413365, 52097494]
             });
             console.log("Inserted users have been successfully removed!");
         });

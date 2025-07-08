@@ -3,9 +3,9 @@
 //? appointment status enum
 //======================================================================
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.status = void 0;
-var status;
-(function (status) {
-    status["available"] = "available";
-    status["booked"] = "booked";
-})(status || (exports.status = status = {}));
+exports.appointment_status = void 0;
+var appointment_status;
+(function (appointment_status) {
+    appointment_status["available"] = "available";
+    appointment_status["booked"] = "booked";
+})(appointment_status || (exports.appointment_status = appointment_status = {}));

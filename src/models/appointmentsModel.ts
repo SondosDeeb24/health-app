@@ -6,7 +6,7 @@ import  sequelize  from '../DatabaseConnection';
 
 
 import { appointmentData } from '../interfaces/appointmentInterface';
-import {status} from '../enums/appointmentEnum';
+import {appointment_status} from '../enums/appointmentEnum';
 
 //import User table(model) to create forieng key 
 import User from './usersModel';
@@ -18,11 +18,11 @@ import User from './usersModel';
 class Appointment extends  Model<InferAttributes<Appointment>, InferCreationAttributes<Appointment>> implements appointmentData{
 
     declare appointmentID: string;
-    declare patientID: number;
+    declare patientID: CreationOptional<number>;
     declare doctorID: number;
     declare appointmentDate: Date;
     declare appointmentTime: string;
-    declare appointmentStatus: keyof typeof status;
+    declare appointmentStatus: keyof typeof appointment_status;
 }
 
 
@@ -56,7 +56,7 @@ Appointment.init({
             type: DataTypes.TIME,
             allowNull: false
         }, appointmentStatus:{
-            type: DataTypes.ENUM(...Object.values(status) as string[]),
+            type: DataTypes.ENUM(...Object.values(appointment_status) as string[]),
             allowNull: false
         }
     },
@@ -71,26 +71,34 @@ Appointment.init({
 //?define the foreign keys relation (Association)
 //-------------------------------------------------------------------------------------------------------------------------------------
 
+// I added 'as' because i want to distiguish the user roles from Appointment model side 
 Appointment.belongsTo(User, { // appointment belongsTo one patientID (user)
     foreignKey: 'patientID',
+    as: 'patient',
     onDelete: 'CASCADE'
 
 });
 
 Appointment.belongsTo(User, {// appointment belongsTo one doctorID (user)
     foreignKey: 'doctorID',
+    as: 'doctor',
     onDelete: 'CASCADE'
 
 
 });
 
+
+// I added 'as' here incase we wanted to use the associaiton from the User model side 
+
 User.hasMany(Appointment, { // User(patientId) has many appointment
-    foreignKey: 'patientID'
+    foreignKey: 'patientID',
+    as: 'patientAppointment'
    
 });
 
 User.hasMany(Appointment, {// User(doctorID) has many appointment
-    foreignKey: 'doctorID'
+    foreignKey: 'doctorID',
+    as: 'doctorAppointment'
     
 });
 
