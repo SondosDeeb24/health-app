@@ -17,7 +17,7 @@ interface JWT_data{
     user_role: string;
 }
 
-const extract_token_data =  (req: Request, res: Response ): JWT_data | null => {
+export const extractJWTData =  (req: Request, res: Response ): JWT_data | null => {
 
     try{
         // take the token from the cookie 
@@ -52,4 +52,3 @@ const extract_token_data =  (req: Request, res: Response ): JWT_data | null => {
     }
 }    
 //=============================================================
-export {extract_token_data} ; 

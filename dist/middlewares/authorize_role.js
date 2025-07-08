@@ -13,13 +13,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authorize_role = void 0;
-const get_token_data_1 = require("../helpers/get_token_data");
+const extractJWTData_1 = require("../helpers/extractJWTData");
 //=======================================================================================
 //? function that will protect cetain pages from unauthorized access (anyone but doctors)
 // strict the access for some page to the doctors only
 //=======================================================================================
 const authorize_role = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const token_data = (0, get_token_data_1.extract_token_data)(req, res);
+    const token_data = (0, extractJWTData_1.extract_token_data)(req, res);
     if (!token_data) { // error message will be sent from get_token_data.ts file
         return;
     }

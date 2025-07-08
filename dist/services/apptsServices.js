@@ -18,7 +18,7 @@ const appointmentEnum_1 = require("../enums/appointmentEnum");
 // import uuid (Universally Unique Identifier)
 const uuid_1 = require("uuid");
 //import helper to get the user data from the token
-const get_token_data_1 = require("../helpers/get_token_data");
+const extractJWTData_1 = require("../helpers/extractJWTData");
 //import Models 
 const appointmentsModel_1 = __importDefault(require("../models/appointmentsModel"));
 const usersModel_1 = __importDefault(require("../models/usersModel"));
@@ -39,7 +39,7 @@ class ApptServices {
                     res.status(400).json({ message: 'Fill all required fields to create appointment' });
                     return;
                 }
-                const doctor_id = (0, get_token_data_1.extract_token_data)(req, res);
+                const doctor_id = (0, extractJWTData_1.extractJWTData)(req, res);
                 if (!doctor_id) { //if no tokent data found stop the operation. (json response is send from extract_token_data function)
                     return;
                 }
@@ -67,7 +67,7 @@ class ApptServices {
                     doctorID: doctor_id.user_id,
                     appointmentDate: new Date(appointment_date), // convert the string to date (becuase appointmentDate is expecting date datatype)
                     appointmentTime: appointment_time,
-                    appointmentStatus: appointmentEnum_1.appointment_status.available
+                    appointmentStatus: appointmentEnum_1.ApptStatus.available
                 });
                 console.log("Available Appointment was successfully defined.");
                 res.status(201).json({ message: "Available Appointment was successfully defined." });
@@ -165,7 +165,7 @@ class ApptServices {
             try {
                 //----------------------------------------------------------------------
                 // get the doctor data from the token 
-                const user_data = (0, get_token_data_1.extract_token_data)(req, res);
+                const user_data = (0, extractJWTData_1.extractJWTData)(req, res);
                 if (!user_data) { // when NO user_data found, we get null. in this case we have to stop the function ( no need to send response because  error message was already sent from extract_token_data function)
                     return;
                 }
@@ -196,8 +196,66 @@ class ApptServices {
                 //===========================================================================================================
             }
             catch (error) {
-                console.log(`Error Occured while fetching the appointments. Error: ${error}`);
+                console.error(`Error Occured while fetching the appointments. Error: ${error}`);
                 res.status(400).json({ message: `Error Occured while fetching the appointments. Error: ${error}` });
+            }
+        });
+    }
+    //?============================================================================================================================================================
+    //? users book appointments
+    // function that allow users to book appointments
+    //============================================================================================================================================================
+    bookAppointment(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const body = req.body;
+                const { apptID } = body;
+                const patientData = (0, extractJWTData_1.extractJWTData)(req, res);
+                if (!patientData) { // error message will be sent from extractJWTData()
+                    return;
+                }
+                //confirm all required data provided
+                if (!apptID) {
+                    console.error('No appointment id was provided!');
+                    res.status(400).json({ message: 'No appointment id was provided!' });
+                    return;
+                }
+                //validate appointment exists and status is available 
+                const chosenAppt = yield appointmentsModel_1.default.findOne({
+                    where: {
+                        appointmentID: apptID,
+                        appointmentStatus: appointmentEnum_1.ApptStatus.available
+                    }
+                });
+                if (!chosenAppt) {
+                    console.error('No appointment found for the provided data, please pick another appointment');
+                    res.status(404).json({ message: 'No appointment found for the provided data, please pick another appointment' });
+                    return;
+                }
+                // when chosenAppt exists, then we update the data of that record (book the appointment)
+                const [updateApptData] = yield appointmentsModel_1.default.update({
+                    patientID: patientData.user_id,
+                    appointmentStatus: appointmentEnum_1.ApptStatus.booked
+                }, {
+                    where: {
+                        appointmentID: apptID
+                    }
+                });
+                //print error message if row was not updatted
+                if (updateApptData === 0) {
+                    console.error('Error Occured, appointment was not booked');
+                    res.status(500).json({ message: 'Error Occured, appointment was not booked' });
+                    return;
+                }
+                console.log('Appointment was successfully booked');
+                res.status(200).json({ message: 'Appointment was successfully booked' });
+                return;
+                //====================================================================================================================
+            }
+            catch (error) {
+                console.error('Error while occured while booking appointment', error);
+                res.status(500).json({ message: 'Error while occured while booking appointment', error });
+                return;
             }
         });
     }

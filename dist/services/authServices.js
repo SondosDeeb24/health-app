@@ -22,7 +22,7 @@ const userEnum_1 = require("../enums/userEnum");
 const usersModel_1 = __importDefault(require("../models/usersModel"));
 //import helper function 
 const validateEnumValue_1 = require("../helpers/validateEnumValue");
-const get_token_data_1 = require("../helpers/get_token_data");
+const extractJWTData_1 = require("../helpers/extractJWTData");
 //==========================================================================================================
 class AuthServices {
     //? =================================================================================================================================
@@ -183,7 +183,7 @@ class AuthServices {
     logout(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user_data = (0, get_token_data_1.extract_token_data)(req, res);
+                const user_data = (0, extractJWTData_1.extractJWTData)(req, res);
                 if (!user_data) { // when no user_data found, we stop the function and return nothing, error message already sent from extract_token_data function so i didn't write another one here
                     return;
                 }

@@ -42,5 +42,13 @@ class ApptController {
             return apptService.viewBookedAppointments(req, res);
         });
     }
+    //============================================================================================================================================================
+    // Book Appointments (by patient)
+    //============================================================================================================================================================
+    bookApppointment(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return apptService.bookAppointment(req, res);
+        });
+    }
 }
 exports.ApptController = ApptController;

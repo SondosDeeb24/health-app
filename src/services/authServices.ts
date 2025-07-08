@@ -17,7 +17,7 @@ import User from '../models/usersModel';
 
 //import helper function 
 import { validateEnum } from '../helpers/validateEnumValue';
-import { extract_token_data } from '../helpers/get_token_data';
+import { extractJWTData } from '../helpers/extractJWTData';
 //==========================================================================================================
 
 class AuthServices{
@@ -215,7 +215,7 @@ class AuthServices{
 
     async logout(req: Request, res: Response): Promise<void>{
         try {
-            const user_data = extract_token_data(req, res);
+            const user_data = extractJWTData(req, res);
 
             if(!user_data){ // when no user_data found, we stop the function and return nothing, error message already sent from extract_token_data function so i didn't write another one here
                 return;

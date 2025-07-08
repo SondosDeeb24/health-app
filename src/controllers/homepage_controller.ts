@@ -4,7 +4,7 @@
 import { Request, Response } from "express";
 
 // import a helper function to extract user data from the token
-import {extract_token_data} from '../helpers/get_token_data';
+import {extract_token_data} from '../helpers/extractJWTData';
 
 
 //===========================================================================================================

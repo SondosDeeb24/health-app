@@ -6,7 +6,7 @@ import  sequelize  from '../DatabaseConnection';
 
 
 import { appointmentData } from '../interfaces/appointmentInterface';
-import {appointment_status} from '../enums/appointmentEnum';
+import {ApptStatus} from '../enums/appointmentEnum';
 
 //import User table(model) to create forieng key 
 import User from './usersModel';
@@ -22,7 +22,7 @@ class Appointment extends  Model<InferAttributes<Appointment>, InferCreationAttr
     declare doctorID: number;
     declare appointmentDate: Date;
     declare appointmentTime: string;
-    declare appointmentStatus: keyof typeof appointment_status;
+    declare appointmentStatus: keyof typeof ApptStatus;
 }
 
 
@@ -56,7 +56,7 @@ Appointment.init({
             type: DataTypes.TIME,
             allowNull: false
         }, appointmentStatus:{
-            type: DataTypes.ENUM(...Object.values(appointment_status) as string[]),
+            type: DataTypes.ENUM(...Object.values(ApptStatus) as string[]),
             allowNull: false
         }
     },

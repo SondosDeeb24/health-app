@@ -20,17 +20,21 @@ import { authorize_role } from "../middlewares/authorize_role";
 //Router
 //===========================================================================================================
 
-//router to define available appointment by the doctor
+//router to define available appointment (by doctor)
 router.post('/', login_required, authorize_role, apptController.defineAvailableApppointments);
 
 //?----------------------------------------------
 
-//router to view booked appointments for every doctor
+//router to view booked appointments (by doctor)
 router.get('/doctor', login_required, authorize_role,  apptController.viewBookedAppointments );
 
-//router to view available appointment for patient
+//router to view available appointment (by patient)
 router.get('/patient', login_required, apptController.viewAvailableAppointments);
 
+//?----------------------------------------------
+
+//route to book appointment (by patient)
+router.patch('/bookAppt', login_required, apptController.bookApppointment);
 //===========================================================================================================
 
 export default router;

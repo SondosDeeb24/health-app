@@ -11,13 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.test = void 0;
 // import a helper function to extract user data from the token
-const get_token_data_1 = require("../helpers/get_token_data");
+const extractJWTData_1 = require("../helpers/extractJWTData");
 //===========================================================================================================
 //
 //===========================================================================================================
 // temp func (it will be updated soon!)
 const test = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = (0, get_token_data_1.extract_token_data)(req, res);
+    const user = (0, extractJWTData_1.extract_token_data)(req, res);
     if (!user) {
         return;
     }

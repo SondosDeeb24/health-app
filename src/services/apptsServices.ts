@@ -4,16 +4,16 @@
 import { Request, Response } from 'express';
 
 //import enum for the valid apponitment status
-import { appointment_status } from '../enums/appointmentEnum';
+import { ApptStatus } from '../enums/appointmentEnum';
 
 //importing interfaces:
-import { define_available_appointments, patient_make_appointment} from '../interfaces/appointmentInterface';
+import { define_available_appointments, DataToViewAvailableAppts, DataToBookAppt} from '../interfaces/appointmentInterface';
 
 // import uuid (Universally Unique Identifier)
 import {v4 as uuidv4} from 'uuid';
 
 //import helper to get the user data from the token
-import { extract_token_data } from '../helpers/get_token_data';
+import { extractJWTData } from '../helpers/extractJWTData';
 
 //import Models 
 import Appointment from '../models/appointmentsModel';
@@ -45,7 +45,7 @@ class ApptServices{
         }
         
 
-        const doctor_id = extract_token_data(req, res);
+        const doctor_id = extractJWTData(req, res);
         if(!doctor_id){ //if no tokent data found stop the operation. (json response is send from extract_token_data function)
             return;
         }
@@ -77,7 +77,7 @@ class ApptServices{
             doctorID: doctor_id.user_id, 
             appointmentDate: new Date(appointment_date), // convert the string to date (becuase appointmentDate is expecting date datatype)
             appointmentTime: appointment_time,
-            appointmentStatus: appointment_status.available
+            appointmentStatus: ApptStatus.available
         })
 
         console.log("Available Appointment was successfully defined.");
@@ -100,7 +100,7 @@ class ApptServices{
         try{
 
         // take data from the patient --------------------------------------------------------------------------------------------------
-        const body: patient_make_appointment = req.body;
+        const body: DataToViewAvailableAppts = req.body;
 
         const {
             department,
@@ -189,7 +189,7 @@ class ApptServices{
 
         //----------------------------------------------------------------------
         // get the doctor data from the token 
-        const user_data = extract_token_data(req, res);
+        const user_data = extractJWTData(req, res);
         if(!user_data ){ // when NO user_data found, we get null. in this case we have to stop the function ( no need to send response because  error message was already sent from extract_token_data function)
             return;
         }
@@ -224,10 +224,78 @@ class ApptServices{
 
     //===========================================================================================================
         }catch(error){
-            console.log(`Error Occured while fetching the appointments. Error: ${error}`);
+            console.error(`Error Occured while fetching the appointments. Error: ${error}`);
             res.status(400).json({message:`Error Occured while fetching the appointments. Error: ${error}` });
         }
     } 
+    //?============================================================================================================================================================
+    //? users book appointments
+    // function that allow users to book appointments
+    //============================================================================================================================================================
+
+    async bookAppointment(req: Request, res: Response):Promise<void>{
+        try{
+            const body: DataToBookAppt = req.body;
+
+            const{
+                apptID
+            } = body;
+            const patientData = extractJWTData(req, res);
+            if(!patientData){// error message will be sent from extractJWTData()
+                return;
+            }
+
+            //confirm all required data provided
+            if(!apptID){
+                console.error('No appointment id was provided!');
+                res.status(400).json({message: 'No appointment id was provided!'});
+                return ;
+            }
+
+            //validate appointment exists and status is available 
+            const chosenAppt = await Appointment.findOne({
+                where:{
+                    appointmentID: apptID,
+                    appointmentStatus: ApptStatus.available
+                }
+            });
+
+            if(!chosenAppt){
+                console.error('No appointment found for the provided data, please pick another appointment');
+                res.status(404).json({message: 'No appointment found for the provided data, please pick another appointment'});
+                return ;
+            }
+
+            // when chosenAppt exists, then we update the data of that record (book the appointment)
+            const [updateApptData]= await Appointment.update({
+                patientID: patientData.user_id, 
+                appointmentStatus: ApptStatus.booked 
+            },
+            {
+                where:{
+                appointmentID: apptID
+                }
+            })
+
+
+            //print error message if row was not updatted
+            if(updateApptData === 0){
+                console.error('Error Occured, appointment was not booked');
+                res.status(500).json({message: 'Error Occured, appointment was not booked'});
+                return ;
+            }
+            
+            console.log('Appointment was successfully booked');
+            res.status(200).json({message: 'Appointment was successfully booked'});
+            return;
+
+        //====================================================================================================================
+        }catch(error){
+            console.error('Error while occured while booking appointment', error);
+            res.status(500).json({message: 'Error while occured while booking appointment', error});
+            return ;
+        }
+    }
 }
 
 //==========================================================================================================

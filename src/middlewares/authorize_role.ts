@@ -4,7 +4,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 
-import { extract_token_data } from '../helpers/get_token_data';
+import { extract_token_data } from '../helpers/extractJWTData';
 
 
 //=======================================================================================

@@ -1,10 +1,9 @@
 //======================================================================
 //? Import
 //======================================================================
-import { appointment_status } from "../enums/appointmentEnum";
+import { ApptStatus } from "../enums/appointmentEnum";
 
 import { RowDataPacket } from "mysql2";// import type from mysql2 for query result
-
 
 
 
@@ -17,7 +16,7 @@ export interface appointmentData {
     doctorID: number;
     appointmentDate: Date;
     appointmentTime: string;
-    appointmentStatus: keyof typeof appointment_status;
+    appointmentStatus: keyof typeof ApptStatus;
 }
 
 // ========================================================================================================
@@ -30,13 +29,23 @@ export interface define_available_appointments extends RowDataPacket{
 
 
 // ========================================================================================================
-//? interface for data we take from PATIENT(user) to book an appointment
+//? interface for data we take from PATIENT(user) to view available appointments
 // ========================================================================================================
-export interface patient_make_appointment {
+export interface DataToViewAvailableAppts {
     department: string,
     appointment_date: string,
     doctor_id?: number
 }
+
+
+
+// ========================================================================================================
+//? interface for data we take from PATIENT(user) to book appointment
+// ========================================================================================================
+export interface DataToBookAppt{
+    apptID: string
+}
+
 
 // // ========================================================================================================
 // //!inferface that show the user fullname

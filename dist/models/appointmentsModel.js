@@ -45,7 +45,7 @@ Appointment.init({
         type: sequelize_1.DataTypes.TIME,
         allowNull: false
     }, appointmentStatus: {
-        type: sequelize_1.DataTypes.ENUM(...Object.values(appointmentEnum_1.appointment_status)),
+        type: sequelize_1.DataTypes.ENUM(...Object.values(appointmentEnum_1.ApptStatus)),
         allowNull: false
     }
 }, {
