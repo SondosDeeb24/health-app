@@ -35,6 +35,7 @@ router.get('/patient', login_required, apptController.viewAvailableAppointments)
 
 //route to book appointment (by patient)
 router.patch('/bookAppt', login_required, apptController.bookApppointment);
+router.patch('/bookAppt/:doctorDepartment', login_required, apptController.bookApppointment);
 //===========================================================================================================
 
 export default router;

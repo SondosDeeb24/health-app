@@ -3,12 +3,13 @@
 //======================================================================
 
 export interface reportData{
-    reportID: string,
+    reportID?: string,
     appointmentID: string, 
     diagnosis: string,
     description: string,
-    bloodPressure: string,
-    bloodSugar: string,
+    systolicBloodPressure:number;
+    diastolicBloodPressure: number;
+    bloodSugar: number,
     temperature: number,
     userWeight: number,
     userHeight: number, 

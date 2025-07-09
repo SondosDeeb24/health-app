@@ -4,7 +4,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 
-import { extract_token_data } from '../helpers/extractJWTData';
+import { extractJWTData } from '../helpers/extractJWTData';
 
 
 //=======================================================================================
@@ -14,7 +14,7 @@ import { extract_token_data } from '../helpers/extractJWTData';
 
 const authorize_role = async (req: Request, res: Response, next: NextFunction): Promise<void> =>{
 
-    const token_data = extract_token_data(req, res);
+    const token_data = extractJWTData(req, res);
     if(!token_data){ // error message will be sent from get_token_data.ts file
         return ; 
     }

@@ -20,7 +20,7 @@ exports.default = {
             yield queryInterface.bulkInsert("appointments", [
                 {
                     appointmentID: '1251e068-09f1-44ee-a06d-bcec997f42ad',
-                    doctorID: 60732771,
+                    doctorID: 52097494,
                     patientID: 42413365,
                     appointmentDate: '2025-07-15',
                     appointmentTime: '15:30',
@@ -28,7 +28,7 @@ exports.default = {
                 },
                 {
                     appointmentID: '140e5069-9f33-41c8-8b6b-71f974ce26de',
-                    doctorID: 60732771,
+                    doctorID: 52097494,
                     appointmentDate: '2025-07-15',
                     appointmentTime: '13:30',
                     appointmentStatus: 'available',
@@ -49,7 +49,7 @@ exports.default = {
                 },
                 {
                     appointmentID: '02a819c8-db69-4139-870b-4e199ed578d3',
-                    doctorID: 60732771,
+                    doctorID: 52097494,
                     appointmentDate: '2025-07-16',
                     appointmentTime: '14:30',
                     appointmentStatus: 'available',

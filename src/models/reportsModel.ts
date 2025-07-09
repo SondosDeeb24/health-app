@@ -14,14 +14,15 @@ import Appointment from './appointmentsModel';
 //? Model class
 //==============================================================================================================================================
 
-class Report extends Model<InferAttributes<Report> , InferCreationAttributes<Report>> implements reportData {
+class ReportModel extends Model<InferAttributes<ReportModel> , InferCreationAttributes<ReportModel>> implements reportData {
 
     declare reportID: string;
     declare appointmentID: string;
     declare diagnosis: string;
     declare description: string;
-    declare bloodPressure: string;
-    declare bloodSugar: string;
+    declare systolicBloodPressure: number;
+    declare diastolicBloodPressure:  number;
+    declare bloodSugar: number;
     declare temperature: number;
     declare userWeight: number;
     declare userHeight: number;
@@ -35,7 +36,7 @@ class Report extends Model<InferAttributes<Report> , InferCreationAttributes<Rep
 //? initiate the tables columns
 //==============================================================================================================================================
 
-Report.init({
+ReportModel.init({
     reportID:{
         type: DataTypes.STRING(100),
         primaryKey: true,
@@ -53,11 +54,14 @@ Report.init({
     }, description:{
         type: DataTypes.STRING(450),
         allowNull: false
-    }, bloodPressure:{
-        type: DataTypes.STRING(20),
+    }, systolicBloodPressure:{
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }, diastolicBloodPressure:{
+        type: DataTypes.INTEGER,
         allowNull: false
     }, bloodSugar:{
-        type: DataTypes.STRING(20),
+        type: DataTypes.FLOAT,
         allowNull: false
     }, temperature:{
         type: DataTypes.FLOAT,
@@ -94,12 +98,12 @@ Report.init({
 // Define foreing keys
 //-------------------------
 
-Report.belongsTo(Appointment, {// Report belongsTo one appointmentID(Appointments)
+ReportModel.belongsTo(Appointment, {// Report belongsTo one appointmentID(Appointments)
     foreignKey: 'appointmentID', 
     onDelete: 'CASCADE'
 })
 
-Appointment.hasOne(Report , { // appointmentID in report  has one Appointment
+Appointment.hasOne(ReportModel , { // appointmentID in report  has one Appointment
     foreignKey: {
         name: 'appointmentID'
     }
@@ -109,10 +113,10 @@ Appointment.hasOne(Report , { // appointmentID in report  has one Appointment
 //==============================================================================================================================================
 //? construct the table/model
 //==============================================================================================================================================
-//!
+
 // try{
 //     const buildModel = async () =>{
-//         await sequelize.sync({force: true});
+//         await ReportModel.sync({force: true});
 //         console.log('Report Model constructured successfully');
 //     }
 
@@ -122,4 +126,4 @@ Appointment.hasOne(Report , { // appointmentID in report  has one Appointment
 // }
 
 //==============================================================================================================================================
-export default Report;
+export default ReportModel;

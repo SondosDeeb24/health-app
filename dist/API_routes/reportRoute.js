@@ -9,26 +9,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 //===========================================================================================================
-//Importing appointments functions
+// importing controller 
 //===========================================================================================================
-const apptController_1 = require("../controllers/apptController");
-const apptController = new apptController_1.ApptController();
-// Middlewares  for authentication and authorization
+const reportController_1 = require("../controllers/reportController");
+const reportsControler = new reportController_1.ReportsController();
 const login_required_1 = require("../middlewares/login_required");
 const authorize_role_1 = require("../middlewares/authorize_role");
 //===========================================================================================================
-//Router
+// Router
 //===========================================================================================================
-//router to define available appointment (by doctor)
-router.post('/', login_required_1.login_required, authorize_role_1.authorize_role, apptController.defineAvailableApppointments);
-//?----------------------------------------------
-//router to view booked appointments (by doctor)
-router.get('/doctor', login_required_1.login_required, authorize_role_1.authorize_role, apptController.viewBookedAppointments);
-//router to view available appointment (by patient)
-router.get('/patient', login_required_1.login_required, apptController.viewAvailableAppointments);
-//?----------------------------------------------
-//route to book appointment (by patient)
-router.patch('/bookAppt', login_required_1.login_required, apptController.bookApppointment);
-router.patch('/bookAppt/:doctorDepartment', login_required_1.login_required, apptController.bookApppointment);
+router.post('/addReport', login_required_1.login_required, authorize_role_1.authorize_role, reportsControler.createReport);
 //===========================================================================================================
 exports.default = router;

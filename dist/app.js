@@ -30,10 +30,14 @@ app.use((0, cookie_parser_1.default)()); // allow reading cookies
 //===========================================================================================
 const authRoute_1 = __importDefault(require("./API_routes/authRoute"));
 const apptRoute_1 = __importDefault(require("./API_routes/apptRoute"));
+const usersRoute_1 = __importDefault(require("./API_routes/usersRoute"));
+const reportRoute_1 = __importDefault(require("./API_routes/reportRoute"));
 //===========================================================================================
 //? set up routes handler for the API endpoints
 //===========================================================================================
 app.use('/api/auth', authRoute_1.default);
 app.use('/api/appt', apptRoute_1.default);
+app.use('/api/users', usersRoute_1.default);
+app.use('/api/report', reportRoute_1.default);
 //===========================================================================================
 exports.default = app;

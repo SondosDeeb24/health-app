@@ -1,27 +1,22 @@
+"use strict";
 //===========================================================================================================
-// Setting up Express router
+// setting up express route
 //===========================================================================================================
-import express, { Router } from 'express';
-
-const router: Router = express.Router();
-
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const router = express_1.default.Router();
 //===========================================================================================================
-// Importing homepage function
+//Importing the controller class
 //===========================================================================================================
-
-// Middlewares  for authentication and authorization
-import { login_required } from '../middlewares/login_required'; // function to to check authentication 
-import { authorize_role } from "../middlewares/authorize_role";// function to to check authorization
-
-//Import controller functions for homepage routes
-import {test} from '../controllers/homepage_controller';
-
+const userController_1 = require("../controllers/userController");
+const usersController = new userController_1.UserController();
 //===========================================================================================================
-// Router
+//Router
 //===========================================================================================================
-
-router.get('/', login_required, authorize_role, test)
-
+router.get('/viewDoctors', usersController.getDoctors);
+router.get('/viewDoctors/:doctorDepartment', usersController.getDoctors);
 //===========================================================================================================
-
-export default router;
+exports.default = router;

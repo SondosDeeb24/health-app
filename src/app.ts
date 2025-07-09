@@ -37,12 +37,17 @@ import auth from './API_routes/authRoute';
 
 import appointment from './API_routes/apptRoute';
 
+import users from './API_routes/usersRoute';
+
+import reports from './API_routes/reportRoute';
 //===========================================================================================
 //? set up routes handler for the API endpoints
 //===========================================================================================
 
 app.use('/api/auth', auth);
 app.use('/api/appt', appointment);
+app.use('/api/users', users);
+app.use('/api/report', reports);
 //===========================================================================================
 
 export default app;

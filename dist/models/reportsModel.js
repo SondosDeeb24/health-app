@@ -13,12 +13,12 @@ const appointmentsModel_1 = __importDefault(require("./appointmentsModel"));
 //==============================================================================================================================================
 //? Model class
 //==============================================================================================================================================
-class Report extends sequelize_1.Model {
+class ReportModel extends sequelize_1.Model {
 }
 //==============================================================================================================================================
 //? initiate the tables columns
 //==============================================================================================================================================
-Report.init({
+ReportModel.init({
     reportID: {
         type: sequelize_1.DataTypes.STRING(100),
         primaryKey: true,
@@ -36,11 +36,14 @@ Report.init({
     }, description: {
         type: sequelize_1.DataTypes.STRING(450),
         allowNull: false
-    }, bloodPressure: {
-        type: sequelize_1.DataTypes.STRING(20),
+    }, systolicBloodPressure: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false
+    }, diastolicBloodPressure: {
+        type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
     }, bloodSugar: {
-        type: sequelize_1.DataTypes.STRING(20),
+        type: sequelize_1.DataTypes.FLOAT,
         allowNull: false
     }, temperature: {
         type: sequelize_1.DataTypes.FLOAT,
@@ -72,11 +75,11 @@ Report.init({
 //-------------------------
 // Define foreing keys
 //-------------------------
-Report.belongsTo(appointmentsModel_1.default, {
+ReportModel.belongsTo(appointmentsModel_1.default, {
     foreignKey: 'appointmentID',
     onDelete: 'CASCADE'
 });
-appointmentsModel_1.default.hasOne(Report, {
+appointmentsModel_1.default.hasOne(ReportModel, {
     foreignKey: {
         name: 'appointmentID'
     }
@@ -84,10 +87,9 @@ appointmentsModel_1.default.hasOne(Report, {
 //==============================================================================================================================================
 //? construct the table/model
 //==============================================================================================================================================
-//!
 // try{
 //     const buildModel = async () =>{
-//         await sequelize.sync({force: true});
+//         await ReportModel.sync({force: true});
 //         console.log('Report Model constructured successfully');
 //     }
 //     buildModel()
@@ -95,4 +97,4 @@ appointmentsModel_1.default.hasOne(Report, {
 //     console.log('Error occured: ', error);
 // }
 //==============================================================================================================================================
-exports.default = Report;
+exports.default = ReportModel;

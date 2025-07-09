@@ -19,7 +19,7 @@ const extractJWTData_1 = require("../helpers/extractJWTData");
 // strict the access for some page to the doctors only
 //=======================================================================================
 const authorize_role = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const token_data = (0, extractJWTData_1.extract_token_data)(req, res);
+    const token_data = (0, extractJWTData_1.extractJWTData)(req, res);
     if (!token_data) { // error message will be sent from get_token_data.ts file
         return;
     }

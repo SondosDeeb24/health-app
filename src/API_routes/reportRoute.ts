@@ -1,27 +1,26 @@
 //===========================================================================================================
-// Setting up Express router
+// setting up express route
 //===========================================================================================================
-import express, { Router } from 'express';
+
+import express, { Router } from "express";
 
 const router: Router = express.Router();
 
 //===========================================================================================================
-// Importing login function
+// importing controller 
 //===========================================================================================================
 
-// Middlewares  for authentication and authorization
-import { login_required } from '../middlewares/login_required'; // function to to check authentication 
-import { authorize_role } from "../middlewares/authorize_role";// function to to check authorization 
+import { ReportsController } from "../controllers/reportController";
+const reportsControler = new ReportsController();
 
-//Import controller functions for viewing the doctors routes
-import {fetch_doctors } from '../controllers/fetch_doctors';
+import { login_required} from "../middlewares/login_required";
+import { authorize_role } from "../middlewares/authorize_role";
+
+
 //===========================================================================================================
 // Router
 //===========================================================================================================
-
-router.get('/', login_required, fetch_doctors)
-router.get('/:dr_department', login_required,  fetch_doctors)
+router.post('/addReport', login_required, authorize_role, reportsControler.createReport);
 
 //===========================================================================================================
-
-export default router;
+export default router
